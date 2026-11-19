@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+	<title>Technical support - New User</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="../../assets/css/main.css" />
+</head>
+
+<body class="is-preload">
+
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Main -->
+		<div id="main">
+			<div class="inner">
+				<!-- Header -->
+				<header id="header">
+					<a href="index.html" class="logo"><strong>Setup a new User</strong></a>
+
+					<ul class="icons">
+						<li class="logo"><span>&#10070;</span><strong> WSL</strong>
+						</li>
+					</ul>
+				</header>
+
+				<!-- Content -->
+				<section>
+					<header class="main">
+						<h1>New Blood for a New Subsystem</h1>
+					</header>
+					<!-- Content 2-->
+					<!-- Preformatted Code -->
+					<h3>Full Terminal output:</h3>
+					<pre class="terminal-code console-output"><code >PS C:\Users\TSUPP> wsl -d 24.04_task1 -u root
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 6.18.58.1-microsoft-standard-WSL2 x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Mon Nov 16 16:20:29 CET 2025
+
+  System load:  0.0                 Processes:             78
+  Usage of /:   0.1% of 1006.85GB   Users logged in:       0
+  Memory usage: 4%                  IPv4 address for eth0: 
+  Swap usage:   0%
+
+  => /usr/src/linux-headers-6.18.58.1-microsoft-standard-WSL2 is using 100.0%
+     of 96MB
+
+New release '24.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+This message is shown once a day. To disable it please create the
+/root/.hushlogin file.
+root@DESKTOP-TSUPP:/mnt/c/Users/TSUPP# NEW_USER=tsupp1
+root@DESKTOP-TSUPP:/mnt/c/Users/TSUPP# useradd -m -G sudo -s /bin/bash "$NEW_USER"
+root@DESKTOP-TSUPP:/mnt/c/Users/TSUPP# passwd "$NEW_USER"
+New password:
+Retype new password:
+passwd: password updated successfully
+root@DESKTOP-TSUPP:/mnt/c/Users/TSUPP# tee /etc/wsl.conf <<_EOF
+> [user]
+> default=${NEW_USER}
+> _EOF
+[user]
+default=tsupp1
+root@DESKTOP-TSUPP:/mnt/c/Users/TSUPP# exit
+logout
+PS C:\Users\TSUPP> wsl --terminate 24.04_task1
+The operation completed successfully.
+PS C:\Users\TSUPP> wsl -d 24.04_task1 -u tsupp1
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 6.18.58.1-microsoft-standard-WSL2 x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Mon Nov 16 16:23:25 CET 2025
+
+  System load:  0.18                Processes:             10
+  Usage of /:   0.1% of 1006.85GB   Users logged in:       0
+  Memory usage: 2%                  IPv4 address for eth0: 
+  Swap usage:   0%
+
+  => /usr/src/linux-headers-6.18.58.1-microsoft-standard-WSL2 is using 100.0%
+     of 96MB
+
+
+This message is shown once a day. To disable it please create the
+/home/tsupp1/.hushlogin file.
+tsupp1@DESKTOP-TSUPP:/mnt/c/Users/TSUPP$
+					</code></pre>
+					<p><strong> About the output:</strong>
+					<ul>
+						<li>Starting Ubuntu with root privileges - line 1</li>
+						<li>Setting up the user - lines 24-33</li>
+						<li>Exiting the subsystem - line 36</li>
+						<li>Shutting down the subsystem - line 38</li>
+						<li>Starting the subsystem as a specific user - line 40</li>
+						<li>Login as a new user - line 63</li>
+					</ul>
+					</p>
+
+
+
+
+			</div>
+
+			<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="../../assets/js/formatConsoleOutput.js"></script>
+
+</body>
+
+</html>

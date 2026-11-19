@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+	<title>Technical support - Commands</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="../../assets/css/main.css" />
+</head>
+
+<body class="is-preload">
+
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Main -->
+		<div id="main">
+			<div class="inner">
+				<!-- Header -->
+				<header id="header">
+					<a href="index.html" class="logo"><strong>Commands example</strong></a>
+
+					<ul class="icons">
+						<li class="logo"><span>&#10070;</span><strong> DOCKER</strong>
+						</li>
+					</ul>
+				</header>
+
+				<!-- Content -->
+				<section>
+					<header class="main">
+						<h1>Let's fire up container...</h1>
+					</header>
+					<!-- Content 2-->
+					<!-- Preformatted Code -->
+					<h3>1. Example with port mapping (runs in the background):</h3>
+					<pre class="terminal-code console-output"><code>sudo docker run --name nameOfYourContainer \
+  -p 8080:8080 -p 8082:8082 -p 8443:8443 \
+  --user root:root \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v tool-volume:/mnt/companyProduct \
+  -v /mnt/c/Users/yourUser/dtp_data:/usr/local/companyProduct/data \
+  -d dockerHubImage/tool:tag</code></pre>
+
+					<p><strong>Breakdown:</strong></p>
+					<ul style="top: 40px; bottom: 0; padding-top: -20px;">
+						<li>If your machine does not have the image locally (line 7), Docker will download it from Docker Hub first.</li>
+						<li><code>--name nameOfYourContainer</code> – sets a custom name for your container.</li>
+						<li><code>-p 8080:8080 -p 8082:8082 -p 8443:8443</code> – maps ports between your host machine and the container (<code>host:container</code>).</li>
+						<li><code>--user root:root</code> – runs the container with root privileges.</li>
+						<li><code>-v host:container</code> – mounts a volume or bind mount (links a directory or file between your host machine and the container).</li>
+						<li><code>-d dockerHubImage/tool:tag</code> – runs the container in detached mode (in the background) using a specific image and version tag from Docker Hub.</li>
+					</ul>
+
+					<h3>2. Example using Bash (waits until the user exits):</h3>
+					<pre class="terminal-code console-output"><code>sudo docker run --name nameOfYourContainer \  
+  --user root:root \
+  -v tool-volume:/mnt/companyProduct \
+  -v /host/path:/container/path \
+  -it dockerHubImage/tool:tag /bin/bash</code></pre>
+
+					<p><strong>Breakdown:</strong></p>
+<ul style="top: 40px; bottom: 0; padding-top: -20px;">
+	<li>If your machine does not have the image (line 5), it will download the image from Docker Hub first</li>
+	<li><code>--name nameOfYourContainer</code> – sets a custom name for your container</li>
+	<li><code>--user root:root</code> – runs the container with root privileges</li>
+	<li><code>-v host:container</code> – mounts a volume (links a folder or named volume between your machine and the container)</li>
+	<li><code>-it dockerHubImage/tool:tag /bin/bash</code> – runs the container in interactive mode with a terminal and starts a bash shell (keeps the container running until you type <code>exit</code>)</li>
+</ul>
+
+<h3>3. Example copy file from container into host:</h3>
+					<pre class="terminal-code console-output"><code>sudo docker cp nameOfContainer:/container/path/app.log /host/path/download/</code></pre>
+
+			</div>
+
+			<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="../../assets/js/formatConsoleOutput.js"></script>
+
+</body>
+
+</html>

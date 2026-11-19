@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+	<title>Technical support - Installation</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="../../assets/css/main.css" />
+</head>
+
+<body class="is-preload">
+
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Main -->
+		<div id="main">
+			<div class="inner">
+				<!-- Header -->
+				<header id="header">
+					<a href="index.html" class="logo"><strong>Installation</strong></a>
+
+					<ul class="icons">
+						<li class="logo"><span>&#10070;</span><strong> WSL</strong>
+						</li>
+					</ul>
+				</header>
+
+				<!-- Content -->
+				<section>
+					<header class="main">
+						<h1>Fresh Installation of Kaboom... Ubuntu</h1>
+					</header>
+					<!-- Content 2-->
+					<!-- Preformatted Code -->
+					<h3>Below simple output from Terminal:</h3>
+					<pre class="terminal-code console-output"><code >PS C:\Users\TSUPP> wsl -l -v
+Windows Subsystem for Linux has no installed distributions.
+You can resolve this by installing a distribution with the instructions below:
+
+Use 'wsl.exe --list --online' to list available distributions
+and 'wsl.exe --install <Distro>' to install.
+PS C:\Users\TSUPP> wsl --install Ubuntu-22.04
+Downloading: Ubuntu 22.04 LTS
+Installing: Ubuntu 22.04 LTS
+Distribution successfully installed. It can be launched via 'wsl.exe -d Ubuntu-22.04'
+Launching Ubuntu-22.04...
+Provisioning the new WSL instance Ubuntu-22.04
+This might take a while...
+Create a default Unix user account: tsupp
+New password:
+Retype new password:
+passwd: password updated successfully
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+tsupp@DESKTOP-TSUPP:/mnt$ dir
+c  d  e  f  wsl  wslg
+tsupp@DESKTOP-TSUPP:/mnt$ exit
+exit
+PS C:\Users\TSUPP> wsl -l -v
+  NAME            STATE           VERSION
+* Ubuntu-22.04    Running         2
+					</code></pre>
+					<p><strong> About the output:</strong>
+					<ul style="top: 40px; bottom: 0; padding-top: -20px;">
+						<li>Checking the list of available systems - line 1-2</li>
+						<li>Ubuntu installation process - line 7-10</li>
+						<li>User configuration - 14</li>
+						<li>Check directory in Ubuntu - 21-22</li>
+						<li>Exit from subsystem - 23-34</li>
+						<li>Again, checking the list of available systems - 25</li>
+					</ul>
+					</p>
+
+
+
+
+			</div>
+
+			<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="../../assets/js/formatConsoleOutput.js"></script>
+
+</body>
+
+</html>

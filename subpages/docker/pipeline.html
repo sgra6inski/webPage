@@ -1,0 +1,199 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+  <title>Technical support - Docker compose pipeline</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+</head>
+
+<body class="is-preload">
+
+  <!-- Wrapper -->
+  <div id="wrapper">
+
+    <!-- Main -->
+    <div id="main">
+      <div class="inner">
+        <!-- Header -->
+        <header id="header">
+          <a href="index.html" class="logo"><strong>Docker compose pipeline</strong></a>
+
+          <ul class="icons">
+            <li class="logo"><span>&#10070;</span><strong> DOCKER</strong>
+            </li>
+          </ul>
+        </header>
+
+        <!-- Content -->
+        <section>
+          <header class="main">
+            <h1>It's not music and compose</h1>
+          </header>
+          <h3>You need to use this:</h3>
+					<pre class="terminal-code console-output"><code>sudo docker-compose -f <strong style="color: brown;">yourFile.yaml</strong> up --build --force-recreate</code></pre>
+          <!-- Content 2-->
+          <!-- Preformatted Code -->
+          <h3>yourFile.yaml:</h3>
+          <pre class="terminal-code docker-compose"><code >name: service_DTP_ED
+
+# Global variables
+x-config:
+  # Custom address for mySQL and file PSTRootConfig.xml
+  subnet: &subnet "172.31.0.0/16"
+  gateway: &gateway "172.31.0.1"
+  # host path and where are files and PSTRootConfig.xml
+  dtpConfigVolume: &dtpConfigVolume "./dockerDTP/conf:/usr/local/parasoft/data/conf"
+  # The file will be configured in service "config-automator" with the above gateway address to connect mySQL.
+  configFilename: &configFilename "PSTRootConfig.xml"
+
+//Services are split into 4: config-automator, mysql, mongoDB, DTP 
+services:
+
+# Service 1:  Adjust the PSTRootConfig.xml
+  config-automator:
+    image: busybox
+    container_name: config_automator
+    user: "0:0"
+    environment:
+      GATEWAY_IP: *gateway
+      VOLUME_MAPPING: *dtpConfigVolume
+      # Transfers name of the file from global variable
+      CONFIG_FILENAME: *configFilename
+    volumes:
+      - *dtpConfigVolume
+    networks:
+      - network1
+    command:
+      - sh
+      - -c
+      - |
+        echo "=== Starting Update ==="
+        
+        # Exclude container's path and link with globalname of the file
+        CONTAINER_PATH=$$(echo "$$VOLUME_MAPPING" | cut -d':' -f2)
+        FILE="$$CONTAINER_PATH/$$CONFIG_FILENAME"
+        TEMP_FILE="/tmp/$$CONFIG_FILENAME"
+        
+        echo "Target file path resolved to: $$FILE"
+        
+        if [ ! -f "$$FILE" ]; then
+          echo "ERROR: File not found at $$FILE"
+          exit 1
+        fi
+
+        echo "File found! Copying to container RAM for processing..."
+        cp "$$FILE" "$$TEMP_FILE"
+
+        echo "Modifying ONLY the last URL line in temp file..."
+        LAST_LINE_NUM=$$(grep -n 'jdbc:mysql' "$$TEMP_FILE" | tail -n 1 | cut -d: -f1)
+        
+        if [ -n "$$LAST_LINE_NUM" ]; then
+          echo "Targeting line number: $$LAST_LINE_NUM"
+          sed -i "$${LAST_LINE_NUM}s|.*jdbc:mysql:.*|    <url>jdbc:mysql://$$GATEWAY_IP:3310/DTP</url>|" "$$TEMP_FILE"
+          
+          echo "Applying changes back to host file..."
+          chmod 666 "$$FILE"
+          
+          cp -f "$$TEMP_FILE" "$$FILE"
+          rm "$$TEMP_FILE"
+        else
+          echo "ERROR: No connection string found to update."
+          exit 1
+        fi
+        
+        echo "Verification of the HOST file from inside container:"
+        grep 'jdbc:mysql' "$$FILE"
+        echo "Configuration step complete!"
+
+# Service 2:  mySQL 8
+  mySQL_8:
+    # folder contains script and Dockerfile
+    build: ./dockerMysql
+    image: i_support/mysql8_2026.2
+    container_name: c_mysql8_2026.2
+    networks:
+      - network1
+    restart: no
+    ports:
+      - "3310:3306"
+      
+# Service 3: MongoDB      
+  mongoDB:
+    # it works in 2026-11 with DTP 2026.2 which was 9.0.4
+    #image: mongo:latest
+    image: mongo:8.0
+    container_name: mongodb
+    networks:
+      - network1
+    restart: no
+    ports:
+      - "27017:27017"
+      
+# service 4: DTP      
+  DTP2026.2:    
+    # folder contains files, certificates, Dockerfile
+    build: ./dockerDTP
+    image: i_support/dtp2026.2
+    container_name: c_dtp2026.2
+    networks:
+      - network1
+    restart: no      
+    ports:
+      - "8314-8399:8314-8399"
+      - "8080:8080"
+      - "8443:8443"
+      - "8082:8082"
+      - "2002:2002"
+      - "443:443"
+    volumes:
+      # Uncomment below docker.sock if you are not in virtualize environment - permanent machineID
+      #- /var/run/docker.sock:/var/run/docker.sock 
+      - ./container/data:/usr/local/parasoft/data
+      - *dtpConfigVolume
+    environment:      
+      - JDBC_DRIVER_URL=https://maven.org      
+      - DEP_USE_REMOTE_DB=true
+      - DEP_DB_HOSTNAME=mongodb
+      - DEP_DB_PORT=27017
+    depends_on:
+      config-automator:
+        condition: service_completed_successfully
+      mongoDB:
+        condition: service_started
+      mySQL_8:
+        condition: service_started
+
+// This is network which links all 4 services. All four services have it.
+networks:
+  network1:
+    name: network2026_2
+    driver: bridge
+    ipam:
+      config:
+        - subnet: *subnet
+          gateway: *gateway
+					</code></pre>
+
+
+
+
+      </div>
+
+      <!-- Scripts -->
+      <script src="assets/js/jquery.min.js"></script>
+      <script src="assets/js/browser.min.js"></script>
+      <script src="assets/js/breakpoints.min.js"></script>
+      <script src="assets/js/util.js"></script>
+      <script src="assets/js/main.js"></script>
+      <script src="../../assets/js/formatDockerCompose.js"></script>
+
+</body>
+
+</html>
