@@ -1,4 +1,4 @@
-# Technical Support – Knowledge Base (Notes of TS)
+# Technical Support – Knowledge Base (Notes of TS) ver.1
 
 The collection of notes, guides, and examples covering Technical Support and DevOps tools. This repository serves as a handy reference for installing, configuring, and working daily with popular development technologies.
 
