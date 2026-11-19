@@ -22,12 +22,12 @@ jobs:
       - name: Kompiluj Sass do CSS
         run: |
           npm install -g sass
-          sass scss/style.scss css/style.css --style=compressed
+          sass assets/sass/main.scss assets/css/main.css --style=compressed
 
       - name: Spakuj cały projekt
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.' # Wysyła główny folder z wygenerowanym plikiem CSS
+          path: '.'
 
       - name: Opublikuj na GitHub Pages (HTTPS)
         id: deployment
