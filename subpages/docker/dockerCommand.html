@@ -49,12 +49,16 @@
 
 					<p><strong>Breakdown:</strong></p>
 					<ul style="top: 40px; bottom: 0; padding-top: -20px;">
-						<li>If your machine does not have the image locally (line 7), Docker will download it from Docker Hub first.</li>
+						<li>If your machine does not have the image locally (line 7), Docker will download it from
+							Docker Hub first.</li>
 						<li><code>--name nameOfYourContainer</code> – sets a custom name for your container.</li>
-						<li><code>-p 8080:8080 -p 8082:8082 -p 8443:8443</code> – maps ports between your host machine and the container (<code>host:container</code>).</li>
+						<li><code>-p 8080:8080 -p 8082:8082 -p 8443:8443</code> – maps ports between your host machine
+							and the container (<code>host:container</code>).</li>
 						<li><code>--user root:root</code> – runs the container with root privileges.</li>
-						<li><code>-v host:container</code> – mounts a volume or bind mount (links a directory or file between your host machine and the container).</li>
-						<li><code>-d dockerHubImage/tool:tag</code> – runs the container in detached mode (in the background) using a specific image and version tag from Docker Hub.</li>
+						<li><code>-v host:container</code> – mounts a volume or bind mount (links a directory or file
+							between your host machine and the container).</li>
+						<li><code>-d dockerHubImage/tool:tag</code> – runs the container in detached mode (in the
+							background) using a specific image and version tag from Docker Hub.</li>
 					</ul>
 
 					<h3>2. Example using Bash (waits until the user exits):</h3>
@@ -65,26 +69,33 @@
   -it dockerHubImage/tool:tag /bin/bash</code></pre>
 
 					<p><strong>Breakdown:</strong></p>
-<ul style="top: 40px; bottom: 0; padding-top: -20px;">
-	<li>If your machine does not have the image (line 5), it will download the image from Docker Hub first</li>
-	<li><code>--name nameOfYourContainer</code> – sets a custom name for your container</li>
-	<li><code>--user root:root</code> – runs the container with root privileges</li>
-	<li><code>-v host:container</code> – mounts a volume (links a folder or named volume between your machine and the container)</li>
-	<li><code>-it dockerHubImage/tool:tag /bin/bash</code> – runs the container in interactive mode with a terminal and starts a bash shell (keeps the container running until you type <code>exit</code>)</li>
-</ul>
+					<ul style="top: 40px; bottom: 0; padding-top: -20px;">
+						<li>If your machine does not have the image (line 5), it will download the image from Docker Hub
+							first</li>
+						<li><code>--name nameOfYourContainer</code> – sets a custom name for your container</li>
+						<li><code>--user root:root</code> – runs the container with root privileges</li>
+						<li><code>-v host:container</code> – mounts a volume (links a folder or named volume between
+							your machine and the container)</li>
+						<li><code>-it dockerHubImage/tool:tag /bin/bash</code> – runs the container in interactive mode
+							with a terminal and starts a bash shell (keeps the container running until you type
+							<code>exit</code>)</li>
+					</ul>
 
-<h3>3. Example copy file from container into host:</h3>
-					<pre class="terminal-code console-output"><code>sudo docker cp nameOfContainer:/container/path/app.log /host/path/download/</code></pre>
+					<h3>3. Example copy file from container into host:</h3>
+					<pre
+						class="terminal-code console-output"><code>sudo docker cp nameOfContainer:/container/path/app.log /host/path/download/</code></pre>
 
 			</div>
+		</div>
+	</div>
 
-			<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-			<script src="../../assets/js/formatConsoleOutput.js"></script>
+	<!-- Scripts -->
+	<script src="../../assets/js/jquery.min.js"></script>
+	<script src="../../assets/js/browser.min.js"></script>
+	<script src="../../assets/js/breakpoints.min.js"></script>
+	<script src="../../assets/js/util.js"></script>
+	<script src="../../assets/js/main.js"></script>
+	<script src="../../assets/js/formatConsoleOutput.js"></script>
 
 </body>
 

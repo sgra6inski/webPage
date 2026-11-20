@@ -132,10 +132,13 @@
 
 							if (target == '_blank')
 								window.open(href);
+							else if (target && target !== '_self')
+								window.open(href, target);
 							else
 								window.location.href = href;
 
 						}, 500);
+
 
 				});
 

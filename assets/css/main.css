@@ -1393,7 +1393,12 @@ ul.contact {
       ul.contact li:first-child:before {
         top: 0; }
     ul.contact li a {
-      color: inherit; }
+      color: #2c2d2e; 
+     border-bottom: 0;
+      text-decoration: none; }
+    ul.contact li a:hover {
+      border-bottom: 0; }
+    
 
 /* Pagination */
 ul.pagination {
@@ -1873,6 +1878,7 @@ button,
   display: -webkit-flex;
   display: -ms-flex;
   display: flex;
+  align-items: flex-end;
   border-bottom: solid 5px #5f8866;
   padding: 6em 0 1em 0;
   position: relative; }
@@ -1895,16 +1901,17 @@ button,
       padding-top: 5em; } }
   @media screen and (max-width: 736px) {
     #header {
-      padding-top: 6.5em; }
+      padding-top: 5.5em; }
       #header .logo {
-        font-size: 1.25em;
-        margin: 0; }
+        font-size: 1.1em;
+        margin: 0;
+        padding-top: 0; }
       #header .icons {
-        height: 5em;
-        line-height: 5em;
-        position: absolute;
-        right: -0.5em;
-        top: 0; } }
+        position: static;
+        height: auto;
+        line-height: inherit;
+        padding-right: 0 !important;
+        white-space: nowrap; } }
 
 /* Banner */
 #banner {
@@ -2067,7 +2074,11 @@ button,
   color: #9fa3a6;
   font-size: 0.9em; }
   #footer .copyright a {
-    color: inherit; }
+    color: inherit;
+    border-bottom: 0;
+    text-decoration: none; }
+  #footer .copyright a:hover {
+    border-bottom: 0; }
 
 /* Menu */
 #menu ul {
@@ -2481,14 +2492,13 @@ button,
    PASEK BOCZNY NAWIGACYJNY (PRAWY) ORAZ PRZYCISK MENU
    ========================================================= */
 
-/* 1. Układ główny (pasek po prawej stronie) */
 #wrapper {
   display: flex;
   flex-direction: row;
   min-height: 100vh;
 }
 
-/* 2. Kontener paska bocznego i animacja chowania/pojawiania */
+/* Kontener paska bocznego */
 #sidebar {
   flex-grow: 0;
   flex-shrink: 0;
@@ -2496,24 +2506,33 @@ button,
   background-color: #f3f0f7;
   font-size: 0.9em;
   position: relative;
-  overflow: visible;
-  transition: margin-right 0.5s ease, box-shadow 0.5s ease;
+  transition: width 0.4s ease, margin-right 0.4s ease;
 }
 
+/* Zamiast wypychać cały #sidebar poza ekran, zerujemy jego szerokość */
 #sidebar.inactive {
-  margin-left: 0;
-  margin-right: -26em; /* Chowa pasek poza prawą krawędź */
+  width: 0 !important;
+  margin-right: 0 !important;
+  overflow: visible !important;
+}
+
+#sidebar.inactive > .inner {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(100%);
 }
 
 #sidebar h2 {
   font-size: 1.38889em;
 }
 
-/* 3. Wnętrze paska bocznego (odstęp u góry na przycisk X) */
+/* Wnętrze paska bocznego */
 #sidebar > .inner {
   padding: 4.5rem 2.22222em 2.44444em 2.22222em;
   position: relative;
   width: 26em;
+  background-color: #f3f0f7;
+  transition: transform 0.4s ease, opacity 0.3s ease;
 }
 
 #sidebar > .inner > * {
@@ -2540,12 +2559,12 @@ button,
   width: calc(100% + 4.44444em);
 }
 
-/* 4. Stały przycisk w prawym górnym rogu (Krzyżyk / Hamburger) */
+/* Przycisk w prawym górnym rogu - ZAWSZE widoczny i przypięty do okna */
 #sidebar .toggle {
-  position: fixed;
-  top: 15px;
-  right: 15px;
-  left: auto;
+  position: fixed !important;
+  top: 15px !important;
+  right: 15px !important;
+  left: auto !important;
   width: 3.5rem;
   height: 3.5rem;
   line-height: 3.5rem;
@@ -2558,8 +2577,10 @@ button,
   text-decoration: none;
   text-indent: -15em;
   white-space: nowrap;
-  z-index: 10002;
-  display: block;
+  z-index: 10005 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
   cursor: pointer;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   transition: background-color 0.2s ease;
@@ -2598,32 +2619,28 @@ button,
 }
 
 /* =========================================================
-   RESPONSYWNOŚĆ PASKA BOCZNEGO (RÓŻNE ROZDZIELCZOŚCI)
+   RESPONSYWNOŚĆ PASKA BOCZNEGO
    ========================================================= */
 
-/* Duże ekrany (przyklejone przewijanie wnętrza paska) */
+/* Duże ekrany */
 @media screen and (min-width: 1281px) {
   #sidebar > .inner {
     position: sticky;
     top: 0;
     height: 100vh;
     overflow-y: auto;
-    scrollbar-width: none; /* Ukrywa pasek przewijania w Firefox */
+    scrollbar-width: none;
   }
 
   #sidebar > .inner::-webkit-scrollbar {
-    display: none; /* Ukrywa pasek przewijania w Chrome/Safari */
+    display: none;
   }
 }
 
-/* Średnie ekrany (zwężenie paska do 24em) */
+/* Średnie ekrany */
 @media screen and (max-width: 1680px) {
   #sidebar {
     width: 24em;
-  }
-
-  #sidebar.inactive {
-    margin-right: -24em;
   }
 
   #sidebar > .inner {
@@ -2638,7 +2655,7 @@ button,
   }
 }
 
-/* Tablety i telefony (pasek nakładany na treść z cieniem) */
+/* Tablety i telefony */
 @media screen and (max-width: 1280px) {
   #sidebar {
     box-shadow: 0 0 5em 0 rgba(0, 0, 0, 0.175);
@@ -2648,11 +2665,13 @@ button,
     position: fixed;
     top: 0;
     z-index: 10000;
+    background-color: transparent;
+    pointer-events: none;
   }
 
   #sidebar.inactive {
     box-shadow: none;
-    margin-right: -24em;
+    width: 24em !important;
   }
 
   #sidebar > .inner {
@@ -2664,6 +2683,16 @@ button,
     overflow-y: auto;
     position: absolute;
     top: 0;
+    pointer-events: auto;
+    box-shadow: 0 0 5em 0 rgba(0, 0, 0, 0.175);
+  }
+
+  #sidebar.inactive > .inner {
+    box-shadow: none;
+  }
+
+  #sidebar .toggle {
+    pointer-events: auto !important;
   }
 
   #sidebar > .inner:after {
@@ -2673,11 +2702,6 @@ button,
     width: 100%;
   }
 
-  body.is-preload #sidebar {
-    display: none;
-  }
-
-  /* Odstęp dla ikon w nagłówku głównym, aby przycisk menu na nie nie nachodził */
   #header .icons {
     padding-right: 4rem;
   }
