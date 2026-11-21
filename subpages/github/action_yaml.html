@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+  <title>Technical support - Use</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+</head>
+
+<body class="is-preload">
+
+  <!-- Wrapper -->
+  <div id="wrapper">
+
+    <!-- Main -->
+    <div id="main">
+      <div class="inner">
+
+        <!-- Header -->
+        <header id="header">
+          <a href="index.html" class="logo"><strong>Pipeline</strong></a>
+
+          <ul class="icons">
+            <li class="logo"><span>&#10070;</span><strong> GITHUB</strong>
+            </li>
+          </ul>
+        </header>
+
+        <!-- Content -->
+        <section>
+          <header class="main">
+            <h1>Chef and a recipe</h1>
+          </header>
+          <!-- Content 2-->
+           <h2 id="content">Actions is the chef doing the work, and the YAML file is the written list of instructions.					
+					</h2>					
+          <h3 id="content">Yaml file - publish the webPage:
+					</h3>
+          <pre class="terminal-code docker-compose"><code ># The display name of the workflow shown in the GitHub Actions tab
+name: Deploy Static Site to GitHub Pages
+
+# Defines the event that triggers this pipeline
+on:
+  push:
+    # Runs automatically whenever new commits are pushed to the 'main' branch
+    branches: ["main"]
+
+# Sets security permissions for the automated token used by this workflow
+permissions:
+  contents: read   # Allows the runner to read and download your repository's code
+  pages: write     # Allows the workflow to deploy files to GitHub Pages
+  id-token: write  # Allows generating a secure token to verify the deployment's identity
+
+# Defines the tasks (jobs) that will execute
+jobs:
+  deploy:
+    # Specifies the virtual machine environment (latest Ubuntu Linux)
+    runs-on: ubuntu-latest
+    
+    # Links this job to the 'github-pages' environment and displays the live URL after deployment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+      
+    # Sequential list of tasks to execute on the virtual machine
+    steps:
+      - name: Checkout code from repository
+        uses: actions/checkout@v4
+
+      - name: Package the entire project
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Specifies the folder to upload; '.' means the entire root directory
+          path: '.'
+
+      - name: Deploy to GitHub Pages (HTTPS)
+        # Assigns an ID so the 'environment' block above can reference its output URL
+        id: deployment
+        uses: actions/deploy-pages@v4
+					</code></pre>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../../assets/js/jquery.min.js"></script>
+  <script src="../../assets/js/browser.min.js"></script>
+  <script src="../../assets/js/breakpoints.min.js"></script>
+  <script src="../../assets/js/util.js"></script>
+  <script src="../../assets/js/main.js"></script>
+  <script src="../../assets/js/formatDockerCompose.js"></script>
+
+</body>
+
+</html>
