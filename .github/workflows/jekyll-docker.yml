@@ -1,29 +1,44 @@
+# The display name of the workflow shown in the GitHub Actions tab
 name: Deploy Static Site to GitHub Pages
 
+# Defines the event that triggers this pipeline
 on:
   push:
+    # Runs automatically whenever new commits are pushed to the 'main' branch
     branches: ["main"]
 
+# Sets security permissions for the automated token used by this workflow
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: read   # Allows the runner to read and download your repository's code
+  pages: write     # Allows the workflow to deploy files to GitHub Pages
+  id-token: write  # Allows generating a secure token to verify the deployment's identity
 
+# Defines the tasks (jobs) that will execute
 jobs:
   deploy:
+    # Specifies the virtual machine environment (latest Ubuntu Linux)
     runs-on: ubuntu-latest
+    
+    # Links this job to the 'github-pages' environment and displays the live URL after deployment
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+      
+    # Sequential list of tasks to execute on the virtual machine
     steps:
+      # Step 1: Downloads your repository files onto the Ubuntu runner
       - name: Pobierz kod z repozytorium
         uses: actions/checkout@v4
 
+      # Step 2: Packages your website files into an archive (artifact) ready for hosting
       - name: Spakuj cały projekt
         uses: actions/upload-pages-artifact@v3
         with:
+          # Specifies the folder to upload; '.' means the entire root directory
           path: '.'
 
+      # Step 3: Takes the packaged files and publishes them live to GitHub Pages
       - name: Opublikuj na GitHub Pages (HTTPS)
+        # Assigns an ID so the 'environment' block above can reference its output URL
         id: deployment
         uses: actions/deploy-pages@v4
